@@ -1,4 +1,4 @@
-#magic line
+#magic
 module Enumerable
   def my_each
     for i in 0...self.length
@@ -15,21 +15,14 @@ module Enumerable
   def my_select
     result = []
     self.my_each do |i|
-      if yield(i)
-        result.<<(i)
-      end
+        result.<<(i) if yield(i)
     end
     result
   end
 
   def my_all?
-    self.my_each do |i|
-      if yield(i) == true
-        return true
-      else
-        return false
-      end
-    end
+    self.my_each {|i|return true if yield(i)}
+    false
   end
 
   def my_any?
@@ -50,9 +43,7 @@ module Enumerable
       end
     end
     return total
-end
-
-
+  end
 end
 
 puts "my_each"
@@ -70,19 +61,16 @@ arrayx = [1, 2, 3, 4, 5]
 arrayx.my_select do |x|
   puts x if x > 3
 end
-
 puts "my_all"
 arr = ["Jasan", "John", "Jean","Jelean"]
 arr.my_all? do |name|
   name[-1] == "n"
 end
-
 puts "my_any"
 arr = ["jasa", "Joh", "Jean","Jelean"]
 arr.my_any? do |name|
   name[-1] == "n"
 end
-
 puts "my_none"
 arr = ["jasa", "Joh", "Jean","Jelean"]
 arr.my_none? do |name|
