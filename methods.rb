@@ -1,14 +1,17 @@
 # frozen_string_literal: true
 module Enumerable
+
   def my_each
-    for i in 0...self.length
-      yield(self[i])
+    for i in self
+      yield i
     end
   end
 
   def my_each_with_index
-    for i in 0...self.length
-      yield(self[i], i)
+    i = 0
+    for j in self
+      yield j, i
+      i += 1
     end
   end
 
@@ -35,12 +38,44 @@ module Enumerable
     true
   end
 
-  def my_count
-    total = 0
-    self.my_each do |i|
-      total += 1 if yield(i)
+  def my_count(item = nil)
+    count = 0
+    for i in self
+      if item != nil
+        count += 1 if i == item
+      elsif block_given?
+        count += 1 if yield i
+      else
+        count += 1
+      end
     end
-    total
+    count
+  end
+
+  def my_map(proc = nil)
+    arry = []
+    if proc != nil
+      for i in self
+        element = proc.call(i)
+        arry << element
+      end
+    else
+      for i in self
+        element = yield i
+        arry << element
+      end
+    end
+    arry
+  end
+
+  def my_inject (initial = 0)
+    i = 0
+    accumulator = initial
+    while (i < self.length)
+      accumulator = yield(accumulator, self[i])
+      i = i + 1
+    end
+    accumulator
   end
 end
 
@@ -60,17 +95,28 @@ arrayx.my_select do |x|
   puts x if x > 3
 end
 puts 'my_all'
-arr = %w[jasa Joh Jean Jelean]
-arr.my_all? do |name|
+arrayx = %w[jasa Joh Jean Jelean]
+arrayx.my_all? do |name|
   name[-1] == 'n'
 end
 puts 'my_any'
-arr = %w[jasa Joh Jean Jelean]
-arr.my_any? do |name|
+arrayx = %w[jasa Joh Jean Jelean]
+arrayx.my_any? do |name|
   name[-1] == 'n'
 end
 puts 'my_none'
-arr = %w[jasa Joh Jean Jelean]
-arr.my_none? do |name|
+arrayx = %w[jasa Joh Jean Jelean]
+arrayx.my_none? do |name|
   name[-1] == 'n'
 end
+puts 'my_count'
+arrayx = %w[jasa Joh Jean Jelean]
+puts arrayx.my_count
+puts 'my_map'
+arrayx = %w[jasa Joh Jean Jelean].my_map { |x| x + '!'  }
+puts arrayx
+puts "my_inject"
+def multiply_els(array=Array.new)
+  array.my_inject(1) { |total, x| total * x }
+end
+puts multiply_els([2,2,4])
