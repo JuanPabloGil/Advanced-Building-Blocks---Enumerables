@@ -1,6 +1,4 @@
-# frozen_string_literal: true
 module Enumerable
-
   def my_each
     for i in self
       yield i
@@ -41,7 +39,7 @@ module Enumerable
   def my_count(item = nil)
     count = 0
     for i in self
-      if item != nil
+      if !item.nil?
         count += 1 if i == item
       elsif block_given?
         count += 1 if yield i
@@ -54,7 +52,7 @@ module Enumerable
 
   def my_map(proc = nil)
     arry = []
-    if proc != nil
+    if !proc.nil?
       for i in self
         element = proc.call(i)
         arry << element
@@ -68,12 +66,12 @@ module Enumerable
     arry
   end
 
-  def my_inject (initial = 0)
+  def my_inject(initial = 0)
     i = 0
     accumulator = initial
-    while (i < self.length)
+    while i < self.length
       accumulator = yield(accumulator, self[i])
-      i = i + 1
+      i += 1
     end
     accumulator
   end
@@ -113,10 +111,10 @@ puts 'my_count'
 arrayx = %w[jasa Joh Jean Jelean]
 puts arrayx.my_count
 puts 'my_map'
-arrayx = %w[jasa Joh Jean Jelean].my_map { |x| x + '!'  }
+arrayx = %w[jasa Joh Jean Jelean].my_map { |x| x + '!' }
 puts arrayx
-puts "my_inject"
-def multiply_els(array=Array.new)
+puts 'my_inject'
+def multiply_els(array)
   array.my_inject(1) { |total, x| total * x }
 end
-puts multiply_els([2,2,4])
+puts multiply_els([2, 2, 4])
