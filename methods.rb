@@ -24,7 +24,7 @@ module Enumerable
   def my_all?
     return true if !block_given?
     if self.is_a? Hash
-      self.my_each { |m, n| return false if !yield(m, n) }
+      self.my_each { |m, n| return false if !yield(m, n) } 
     else
       self.my_each { |i| return false if !yield(i) }
     end
