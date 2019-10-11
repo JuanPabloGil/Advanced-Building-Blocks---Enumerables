@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # methos of ruby: each, each_with_index, my_select, my_all?, my_any?, my_none?, my_count, my_map, my_injection
 module Enumerable
   def my_each
