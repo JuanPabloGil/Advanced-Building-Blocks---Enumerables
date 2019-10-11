@@ -13,88 +13,79 @@ module Enumerable
   def my_each_with_index
     return to_enum :my_each_with_index unless block_given?
     i = 0
-    my_each { |item| yield item, i, i += 1 }
+    my_each { |x| yield x, i, i += 1 }
     self
   end
 
   def my_select
     return to_enum :my_select unless block_given?
-    return_arr = []
-    my_each { |item| return_arr << item if yield(item) }
-    return_arr
+    arr = []
+    my_each { |x| arr << x if yield(x) }
+    arr
   end
-  
 
-  def my_all?
-    return true if !block_given?
-    if self.is_a? Hash
-      self.my_each { |m, n| return false if !yield(m, n) }
+
+  def my_all?(param = nil)
+    all = true
+    if block_given?
+      my_each { |x| unless yield(x) then all=false; break end }
+    elsif param
+      my_each { |x| unless param == x then all=false; break end }
     else
-      self.my_each { |i| return false if !yield(i) }
+      my_each { |x| unless x  then all=false; break end }
     end
-    true
+    all
   end
 
-  def my_any?
-    return true if !block_given?
-    if self.is_a? Hash
-      self.my_each { |m, n| return true if yield(m, n) }
+
+  def my_any?(param = nil)
+    any = false
+    if block_given?
+      my_each { |x| if yield(x) then any=true; break end }
+    elsif param
+      my_each { |x| if param == x then any=true; break end }
     else
-      self.my_each { |i| return true if yield(i) }
+      my_each { |x| if x then any=true; break end }
     end
-    false
+    any
   end
 
-  def my_none?
-    return false unless block_given?
-    if self.class == Hash
-      self.my_each do |m, n|
-        return false if yield(m, n)
-      end
+
+  def my_none?(param = nil, &block)
+    !my_any?(param, &block)
+  end
+
+
+  def my_count(param = nil)
+    i = 0
+    if block_given?
+      my_each { |x| i += 1 if yield(x) == true }
     else
-      self.my_each do |i|
-        return false if yield(i)
-      end
+      return length if arg.nil?
+
+      my_each { |x| i += 1 if x == arg }
     end
-    true
+    i
   end
 
-  def my_count?
-    return self.length unless block_given?
-    count = 0
-    self.my_each { |i| count += 1 if yield(i) }
-    count
+
+  def my_map
+    return to_enum :my_map unless block_given?
+    arr = []
+    my_each { |item| arr << yield(item) }
+    arr
   end
 
-  def my_map(proc = nil)
-    arry = []
-    if !proc.nil?
-      for i in self
-        element = proc.call(i)
-        arry << element
-      end
-    else
-      for i in self
-        element = yield(i)
-        arry << element
-      end
-    end
-    arry
+
+
+  def my_inject(param1 = nil, param2 = nil)
+    check_self = is_a?(Range) ? to_a : self
+    accumulator = (param1.nil? || param1.is_a?(Symbol)) ? check_self[0] : param1
+    check_self[0..-1].my_each { |item| accumulator = yield(accumulator, item) } if block_given? && param1
+    check_self[1..-1].my_each { |item| accumulator = yield(accumulator, item) } if block_given? && !param1
+    check_self[1..-1].my_each { |i| accumulator = accumulator.send(param1, i) } if param1.is_a?(Symbol)
+    check_self[0..-1].my_each { |i| accumulator = accumulator.send(param2, i) } if param2
+    accumulator
   end
 
-  def my_inject(*start_num)
-      result = 0
-      if start_num.count == 0
-          self.my_each {|num|
-              result = yield(result, num)
-          }
-      return result
-      else
-          start_num = start_num[0]
-          self.my_each {|num|
-              start_num = yield(start_num, num)
-          }
-          return start_num
-      end
-  end
 end
