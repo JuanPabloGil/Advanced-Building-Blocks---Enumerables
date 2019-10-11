@@ -1,8 +1,9 @@
 # frozen_string_literal: true
-#This module contains default methos of ruby: each, each_with_index, my_select, my_all?, my_any?, my_none?, my_count, my_map, my_injection
+# methos of ruby: each, each_with_index, my_select, my_all?, my_any?, my_none?, my_count, my_map, my_injection
 module Enumerable
   def my_each
     return to_enum :my_each unless block_given?
+
     check_self = is_a?(Range) ? to_a : self
     i = 0
     while i < check_self.length
@@ -13,6 +14,7 @@ module Enumerable
 
   def my_each_with_index
     return to_enum :my_each_with_index unless block_given?
+
     i = 0
     my_each { |x| yield x, i, i += 1 }
     self
@@ -20,6 +22,7 @@ module Enumerable
 
   def my_select
     return to_enum :my_select unless block_given?
+
     arr = []
     my_each { |x| arr << x if yield(x) }
     arr
@@ -67,6 +70,7 @@ module Enumerable
 
   def my_map
     return to_enum :my_map unless block_given?
+
     arr = []
     my_each { |item| arr << yield(item) }
     arr
@@ -75,7 +79,6 @@ module Enumerable
   def my_inject(param1 = nil, param2 = nil)
     check_self = is_a?(Range) ? to_a : self
     accumulator = param1.nil? || param1.is_a?(Symbol) ? check_self[0] : param1
-
     if block_given? && param1
       check_self[0..-1].my_each do |item|
         accumulator = yield(accumulator, item)
@@ -100,6 +103,5 @@ module Enumerable
       end
     end
     accumulator
-
   end
 end
