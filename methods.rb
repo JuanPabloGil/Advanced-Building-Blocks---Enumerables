@@ -52,7 +52,7 @@ module Enumerable
     any
   end
 
-  def my_none?(_param = nil, &block)
+  def my_none?(param = nil, &block)
     !my_any?(param, &block)
   end
 
@@ -61,9 +61,9 @@ module Enumerable
     if block_given?
       my_each { |x| i += 1 if yield(x) == true }
     else
-      return length if arg.nil?
+      return length if param.nil?
 
-      my_each { |x| i += 1 if x == arg }
+      my_each { |x| i += 1 if x == param }
     end
     i
   end
