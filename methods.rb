@@ -1,30 +1,34 @@
 module Enumerable
-  def my_each
-    for i in self
-      yield(i) if block_given?
-    end
-  end
 
-  def my_each_with_index
+  def my_each
+    return to_enum :my_each unless block_given?
+    check_self = is_a?(Range) ? to_a : self
     i = 0
-    for j in self
-      yield(j, i) if block_given?
+    while i < check_self.length
+      yield(check_self[i])
       i += 1
     end
   end
 
-  def my_select
-    result = []
-    self.my_each do |i|
-      result.<<(i) if yield(i)
-    end
-    result
+  def my_each_with_index
+    return to_enum :my_each_with_index unless block_given?
+    i = 0
+    my_each { |item| yield item, i, i += 1 }
+    self
   end
+
+  def my_select
+    return to_enum :my_select unless block_given?
+    return_arr = []
+    my_each { |item| return_arr << item if yield(item) }
+    return_arr
+  end
+  
 
   def my_all?
     return true if !block_given?
     if self.is_a? Hash
-      self.my_each { |m, n| return false if !yield(m, n) } 
+      self.my_each { |m, n| return false if !yield(m, n) }
     else
       self.my_each { |i| return false if !yield(i) }
     end
