@@ -47,12 +47,12 @@ module Enumerable
     elsif param
       my_each { |x| if param == x then any = true; break end }
     else
-      my_each { |x| if x then any=true; break end }
+      my_each { |x| if x then any = true; break end }
     end
     any
   end
 
-  def my_none?(param = nil, &block)
+  def my_none?(_param = nil, &block)
     !my_any?(param, &block)
   end
 
