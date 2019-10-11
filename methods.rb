@@ -24,19 +24,17 @@ module Enumerable
     arr
   end
 
-
   def my_all?(param = nil)
     all = true
     if block_given?
-      my_each { |x| unless yield(x) then all=false; break end }
+      my_each { |x| unless yield(x) then all = false; break end }
     elsif param
-      my_each { |x| unless param == x then all=false; break end }
+      my_each { |x| unless param == x then all = false; break end }
     else
-      my_each { |x| unless x  then all=false; break end }
+      my_each { |x| unless x  then all = false; break end }
     end
     all
   end
-
 
   def my_any?(param = nil)
     any = false
@@ -50,13 +48,13 @@ module Enumerable
     any
   end
 
-
   def my_none?(param = nil, &block)
+
     !my_any?(param, &block)
   end
 
-
   def my_count(param = nil)
+
     i = 0
     if block_given?
       my_each { |x| i += 1 if yield(x) == true }
@@ -68,15 +66,12 @@ module Enumerable
     i
   end
 
-
   def my_map
     return to_enum :my_map unless block_given?
     arr = []
     my_each { |item| arr << yield(item) }
     arr
   end
-
-
 
   def my_inject(param1 = nil, param2 = nil)
     check_self = is_a?(Range) ? to_a : self
@@ -87,5 +82,4 @@ module Enumerable
     check_self[0..-1].my_each { |i| accumulator = accumulator.send(param2, i) } if param2
     accumulator
   end
-
 end
