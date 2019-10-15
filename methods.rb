@@ -34,7 +34,7 @@ module Enumerable
     if block_given?
       my_each { |x| unless yield(x) then all = false; break end }
     elsif param
-      my_each { |x| return false unless pattern(x, param) }
+      my_each { |x| return false unless pattern?(x, param) }
     else
       my_each { |x| unless x then all = false; break end }
     end
@@ -46,7 +46,7 @@ module Enumerable
     if block_given?
       my_each { |x| if yield(x) then any = true; break end }
     elsif param
-      my_each {|x | return true if pattern(x, param) }
+      my_each {|x | return true if pattern?(x, param) }
     else
       my_each { |x| if x then any = true; break end }
     end
@@ -56,7 +56,7 @@ module Enumerable
   def my_none?(param = nil, &block)
     !my_any?(param, &block)
   end
-  
+
   def pattern?(obj, pattern)
     (obj.respond_to?(:eql?) && obj.eql?(pattern)) ||
     (pattern.is_a?(Class) && obj.is_a?(pattern)) ||
