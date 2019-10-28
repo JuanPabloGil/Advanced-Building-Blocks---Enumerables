@@ -36,8 +36,8 @@ describe Enumerable do
 
     it "returns an Enumerator when no block given" do
       expect(test_arr.my_each_with_index.is_a?(Enumerator)).to eql(true)
-
     end
+
   end
 
   describe "#my_select" do
@@ -69,11 +69,11 @@ describe Enumerable do
     it "check if any of the elements have a length equal or bigger than three" do
       expect( test_arr_str.my_any?(&test_length)).to be true
     end
-  end
 
-  #it "return false when no block is given" do
-  #    expect(test_absolutes.my_any?).to eql(false)
-  #  end
+    it "return false when no block is given" do
+      expect(test_absolutes.my_any?).to eql(false)
+    end
+  end
 
   describe "#my_none?" do
 
@@ -100,9 +100,32 @@ describe Enumerable do
     it "Returns the number og items that match the positional argument given" do
       expect(test_arr.my_count(3)).to eql(1)
     end
-
-    
   end
 
+  describe "#my_inject" do
+    it "Returns the acummulative result when giving an starting value and a given block" do
+     expect(test_range.my_inject(1) {|x, y| x*y }).to eql(24)
+    end
+
+    it "Returns the acummulative result when giving an starting value urnary operator" do
+      expect(test_range.my_inject(1, :*)).to eql(24)
+    end
+  end
+
+  describe "#my_map" do
+
+    it "It will return a modified whit a block operation" do
+      expect(test_arr.my_map(&test_block)).to eql([2, 4, 6])
+    end
+
+    it "It will return a modified when given a range with a block " do
+      expect(test_range.my_map(&test_block)).to eql([2, 4, 6, 8])
+    end
+
+    it "It will return an array of strings  when given an array of integers" do
+      expect(test_range.my_map(&:to_s)).to eql(["1", "2", "3", "4"])
+    end
+
+  end
 
 end
