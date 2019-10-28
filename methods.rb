@@ -3,7 +3,7 @@
 # methos of ruby: each, each_with_index, my_select, my_all?, my_any?, my_none?, my_count, my_map, my_injection
 module Enumerable
   def my_each
-    return to_enum :my_each unless block_given?
+    return to_enum(:my_each) unless block_given?
 
     check_self = is_a?(Range) ? to_a : self
     i = 0
@@ -11,7 +11,7 @@ module Enumerable
       yield(check_self[i])
       i += 1
     end
-    self 
+    self
   end
 
   def my_each_with_index
@@ -33,11 +33,11 @@ module Enumerable
   def my_all?(param = nil)
     all = true
     if block_given?
-      my_each { |x| unless yield(x) then all = false; break end }
+      my_each { |x| unless yield(x) then all = false else break end }
     elsif param
       my_each { |x| return false unless pattern?(x, param) }
     else
-      my_each { |x| unless x then all = false; break end }
+      my_each { |x| unless x then all = false else break end }
     end
     all
   end
@@ -45,11 +45,11 @@ module Enumerable
   def my_any?(param = nil)
     any = false
     if block_given?
-      my_each { |x| if yield(x) then any = true; break end }
+      my_each { |x| if yield(x) then any = true else break end }
     elsif param
-      my_each {|x | return true if pattern?(x, param) }
+      my_each {|x| return true if pattern?(x, param) }
     else
-      my_each { |x| if x then any = true; break end }
+      my_each { |x| if x then any = true else break end }
     end
     any
   end
