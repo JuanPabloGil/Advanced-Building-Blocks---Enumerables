@@ -25,7 +25,8 @@ describe Enumerable do
     end
 
     it 'Tests match the official enumerable method counterpart' do
-      expect(test_arr.my_each { test_block }).to eq(test_arr.each { test_block })
+      expect(test_arr.my_each { test_block }).to
+      eq(test_arr.each { test_block })
       expect(test_arr.my_each.is_a?(Enumerator)).to eq(test_arr.each.is_a?(Enumerator))
     end
   end
@@ -38,7 +39,6 @@ describe Enumerable do
     it 'returns an Enumerator when no block given' do
       expect(test_arr.my_each_with_index.is_a?(Enumerator)).to eql(true)
     end
-
   end
 
   describe '#my_select' do
@@ -62,7 +62,6 @@ describe Enumerable do
       expect(test_arr_str.my_all?(&test_length_2)).to eql(false)
     end
   end
-
 
   describe '#my_any?' do
 
