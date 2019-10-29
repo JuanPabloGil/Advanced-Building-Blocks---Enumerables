@@ -9,3 +9,4 @@ files:
     - "Guardfile"
     - "Rakefile"
     - "methods.rb"
+    - "spec/*"

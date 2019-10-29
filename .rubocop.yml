@@ -13,6 +13,7 @@ AllCops:
             Max: 150
             Metrics/BlockLength:
               ExcludedMethods: ['describe', 'context' ]
+              Max: 100
 
               Style/Documentation:
                 Enabled: false

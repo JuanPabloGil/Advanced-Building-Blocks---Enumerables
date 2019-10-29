@@ -91,7 +91,7 @@ describe Enumerable do
 
   describe '#my_inject' do
     it ' Giving an starting value and a given block' do
-      expect(test_range.my_inject(1) { | x, y | x * y }).to eql(24)
+      expect(test_range.my_inject(1){ | x, y| x * y}).to eql(24)
     end
 
     it ' Giving an starting value urnary operator' do
