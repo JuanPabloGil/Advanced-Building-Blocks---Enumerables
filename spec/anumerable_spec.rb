@@ -27,7 +27,7 @@ describe Enumerable do
 
   describe '#my_each_with_index' do
     it 'It expect to be equal to 1 2 3' do
-      expect(test_arr.my_each_with_index{ test_block }).to eql(test_arr)
+      expect(test_arr.my_each_with_index { test_block }).to eql(test_arr)
     end
 
     it 'returns an Enumerator when no block given' do
@@ -57,7 +57,7 @@ describe Enumerable do
 
   describe '#my_any?' do
     it ' elements with a length equal or bigger than three' do
-      expect( test_arr_str.my_any?(&test_length)).to be true
+      expect(test_arr_str.my_any?(&test_length)).to be true
     end
 
     it 'return false when no block is given' do
@@ -91,7 +91,7 @@ describe Enumerable do
 
   describe '#my_inject' do
     it ' Giving an starting value and a given block' do
-     expect(test_range.my_inject(1) {|x, y| x*y }).to eql(24)
+      expect(test_range.my_inject(1) { | x, y | x * y }).to eql(24)
     end
 
     it ' Giving an starting value urnary operator' do
@@ -109,8 +109,7 @@ describe Enumerable do
     end
 
     it 'It will return an array of strings  when given an array of integers' do
-      expect(test_range.my_map(&:to_s)).to eql(["1", "2", "3", "4"])
+      expect(test_range.my_map(&:to_s)).to eql(%w[1 2 3 4])
     end
   end
-
 end
