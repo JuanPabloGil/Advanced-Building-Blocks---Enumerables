@@ -33,7 +33,7 @@ describe Enumerable do
 
   describe '#my_each_with_index' do
     it 'It expect to be equal to 1 2 3' do
-      expect(test_arr.my_each_with_index{test_block}).to eql(test_arr)
+      expect(test_arr.my_each_with_index{ test_block }).to eql(test_arr)
     end
 
     it 'returns an Enumerator when no block given' do
@@ -42,7 +42,6 @@ describe Enumerable do
   end
 
   describe '#my_select' do
-
     it 'Check if its an even' do
       expect(test_arr.my_select(&:even?)).to eql([2])
     end
@@ -53,7 +52,6 @@ describe Enumerable do
   end
 
   describe '#my_all?' do
-
     it 'Check the length of the words 1 with 3' do
       expect(test_arr_str.my_all?(&test_length)).to eql(true)
     end
@@ -64,7 +62,6 @@ describe Enumerable do
   end
 
   describe '#my_any?' do
-
     it 'check any elements have a length equal or bigger than three' do
       expect( test_arr_str.my_any?(&test_length)).to be true
     end
@@ -75,7 +72,6 @@ describe Enumerable do
   end
 
   describe '#my_none?' do
-
     it 'Return true when none with the test length 3' do
       expect(test_arr_str.my_none?(test_length)).to be true
     end
@@ -90,7 +86,6 @@ describe Enumerable do
   end
 
   describe '#my_count' do
-
     it 'Count the elements' do
       expect(test_arr.my_count).to eql(3)
     end
@@ -111,7 +106,6 @@ describe Enumerable do
   end
 
   describe '#my_map' do
-
     it 'It will return a modified whit a block operation' do
       expect(test_arr.my_map(&test_block)).to eql([2, 4, 6])
     end
