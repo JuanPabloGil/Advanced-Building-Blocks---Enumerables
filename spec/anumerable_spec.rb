@@ -1,4 +1,4 @@
-require './methods.rb'
+require_relative './methods.rb'
 
 describe Enumerable do
   let(:test_arr) { [1, 2, 3] }
@@ -51,7 +51,6 @@ describe Enumerable do
     end
   end
 
-
   describe "#my_all?" do
 
     it "Check the length of the words 1 with 3" do
@@ -62,7 +61,6 @@ describe Enumerable do
       expect(test_arr_str.my_all?(&test_length_2)).to eql(false)
     end
   end
-
 
   describe "#my_any?" do
 
@@ -127,5 +125,4 @@ describe Enumerable do
     end
 
   end
-
 end
