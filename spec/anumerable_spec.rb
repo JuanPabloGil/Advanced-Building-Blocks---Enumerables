@@ -23,12 +23,6 @@ describe Enumerable do
     it 'returns an Enumerator when no block given' do
       expect(test_arr.my_each.is_a?(Enumerator)).to be(true)
     end
-
-    it 'Tests match the official enumerable method counterpart' do
-      expect(test_arr.my_each { test_block }).to
-      eq(test_arr.each { test_block })
-      expect(test_arr.my_each.is_a?(Enumerator)).to eq(test_arr.each.is_a?(Enumerator))
-    end
   end
 
   describe '#my_each_with_index' do
@@ -62,7 +56,7 @@ describe Enumerable do
   end
 
   describe '#my_any?' do
-    it 'check any elements have a length equal or bigger than three' do
+    it ' elements with a length equal or bigger than three' do
       expect( test_arr_str.my_any?(&test_length)).to be true
     end
 
@@ -90,17 +84,17 @@ describe Enumerable do
       expect(test_arr.my_count).to eql(3)
     end
 
-    it 'Returns the number og items that match the positional argument given' do
+    it 'Items that match the positional argument given' do
       expect(test_arr.my_count(3)).to eql(1)
     end
   end
 
   describe '#my_inject' do
-    it 'Returns the acummulative result when giving an starting value and a given block' do
+    it ' Giving an starting value and a given block' do
      expect(test_range.my_inject(1) {|x, y| x*y }).to eql(24)
     end
 
-    it 'Returns the acummulative result when giving an starting value urnary operator' do
+    it ' Giving an starting value urnary operator' do
       expect(test_range.my_inject(1, :*)).to eql(24)
     end
   end
