@@ -3,7 +3,7 @@
 # methos of ruby: each, each_with_index, my_select, my_all?, my_any?, my_none?, my_count, my_map, my_injection
 module Enumerable
   def my_each
-    return to_enum :my_each unless block_given?
+    return to_enum(:my_each) unless block_given?
 
     check_self = is_a?(Range) ? to_a : self
     i = 0
@@ -11,6 +11,7 @@ module Enumerable
       yield(check_self[i])
       i += 1
     end
+    self
   end
 
   def my_each_with_index
@@ -29,32 +30,32 @@ module Enumerable
     arr
   end
 
-  def my_all?(param = nil)
-    all = true
+  def my_all?(pattern = nil)
+    all_true = true
     if block_given?
-      my_each { |x| unless yield(x) then all = false; break end }
-    elsif param
-      my_each { |x| return false unless pattern?(x, param) }
+      my_each { |item| unless yield(item) then all_true=false; break end }
+    elsif pattern
+      my_each { |item| unless pattern === item then all_true=false; break end }
     else
-      my_each { |x| unless x then all = false; break end }
+      my_each { |item| unless item  then all_true=false; break end }
     end
-    all
+    all_true
   end
 
-  def my_any?(param = nil)
-    any = false
+  def my_any?(pattern = nil)
+    any_true = false
     if block_given?
-      my_each { |x| if yield(x) then any = true; break end }
-    elsif param
-      my_each {|x | return true if pattern?(x, param) }
+      my_each { |item| if yield(item) then any_true=true; break end }
+    elsif pattern
+      my_each { |item| if pattern === item then any_true=true; break end }
     else
-      my_each { |x| if x then any = true; break end }
+      my_each { |item| if item then any_true=true; break end }
     end
-    any
+    any_true
   end
 
-  def my_none?(param = nil, &block)
-    !my_any?(param, &block)
+  def my_none?(pattern = nil, &block)
+    !my_any?(pattern, &block)
   end
 
   def pattern?(obj, pattern)
