@@ -50,13 +50,10 @@ describe Enumerable do
       expect(test_arr_str.my_all?(&test_length)).to eql(true)
     end
 
-    it 'return false when no block is given' do
+    it 'return false when no block is given (cr)' do
       expect([1, false, 'hi', []].my_all?).to eql([1, false, 'hi', []].all?)
     end
 
-    it 'return false when no block is given' do
-      expect([1, false, 'hi', []].my_all?).to eql([1, false, 'hi', []].all?)
-    end
 
     it 'Check the length of the words 2 with 5' do
       expect(test_arr_str.my_all?(&test_length_2)).to eql(false)
@@ -68,9 +65,10 @@ describe Enumerable do
       expect(test_arr_str.my_any?(&test_length)).to be true
     end
 
-    it 'return false when no block is given' do
+    it 'return false when no block is given (cr)' do
       expect(test_absolutes.my_any?).to eql(test_absolutes.any?)
     end
+
   end
 
   describe '#my_none?' do
@@ -86,7 +84,7 @@ describe Enumerable do
       expect([].my_none?).to be true
     end
 
-    it 'return false when no block is given' do
+    it 'return false when no block is given  (cr)' do
       expect(test_absolutes.my_none?).to eql(test_absolutes.none?)
     end
 
